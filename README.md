@@ -1,5 +1,5 @@
 
-# MKL Grocery List (agl)
+# MKL Grocery List (mkl)
 
 A command-line grocery list manager built in Python.
 

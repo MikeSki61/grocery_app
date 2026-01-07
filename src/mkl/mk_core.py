@@ -19,10 +19,9 @@ import os
 import re
 import uuid
 
-import constants
-import log_config
-import utils
-from grocery_item import GroceryItem
+import mkl.constants as constants
+import mkl.utils as utils
+from mkl.grocery_item import GroceryItem
 
 class GroceryList:
     
