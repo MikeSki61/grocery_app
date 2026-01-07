@@ -9,7 +9,7 @@ setup(
     packages=find_packages(where="src"),
     entry_points={
         "console_scripts": [
-            "mk=mk.mk_launch:main",
+            "mkl=mkl.mk_launch:main",
         ],
     },
     install_requires=[],
