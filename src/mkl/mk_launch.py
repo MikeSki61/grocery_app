@@ -2,9 +2,12 @@
 
 
 import argparse
+from PyQt5 import QtWidgets
+import sys
 import mkl.constants as constants
 import mkl.mk_core as mk_core
 import mkl.utils as utils
+import mkl.ui as mkl_ui
 
 class Launch:
     def __init__(self):
@@ -28,7 +31,10 @@ class Launch:
         elif mode == "cli":
             print("Use CLI mode from main()")
         elif mode == "ui":
-            pass
+            app = QtWidgets.QApplication(sys.argv)
+            ui = mkl_ui.GroceryApp()
+            ui.show()
+            app.exec_()
         else:
             print(f"Unknown mode: {mode}")
 
@@ -226,7 +232,7 @@ class Launch:
             name(str) The name of the item
 
         """
-        print("Enter a name for the item. (ex. ice cream")
+        print("Enter a name for the item. (ex. ice cream)")
         # Get the name input
         name = input("Item name: ").strip()
 
