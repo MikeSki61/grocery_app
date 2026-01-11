@@ -1,4 +1,5 @@
 import json
+# from PyQt5 import QtWidgets
 
 def save_data(file_path, data):
 
@@ -30,3 +31,19 @@ def get_line_delimiter():
      delimiter = "=========="
      
      return delimiter
+
+# def show_warning(msg, title="WARNING"):
+#     """
+#     Show a warning box
+
+#     Args:
+#         msg (string): message to be displayed
+#         title (string) : title for window
+#     """
+#     window = QtWidgets.QMessageBox()
+#     window.setWindowTitle(title)
+#     window.setText(msg)
+#     window.exec_()
+
+
+

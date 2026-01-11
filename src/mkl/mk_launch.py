@@ -1,13 +1,10 @@
 #!/usr/bin/env python
 
-
 import argparse
-from PyQt5 import QtWidgets
-import sys
 import mkl.constants as constants
 import mkl.mk_core as mk_core
 import mkl.utils as utils
-import mkl.ui as mkl_ui
+
 
 class Launch:
     def __init__(self):
@@ -31,11 +28,7 @@ class Launch:
         elif mode == "cli":
             print("Use CLI mode from main()")
         elif mode == "ui":
-            app = QtWidgets.QApplication(sys.argv)
-            ui = mkl_ui.GroceryApp()
-            ui.show()
-            app.exec_()
-        else:
+            pass
             print(f"Unknown mode: {mode}")
 
     def run_interactive(self) -> None:
@@ -94,15 +87,7 @@ class Launch:
 
         print(f"{name} was added to the grocery list")
         print(utils.get_line_delimiter())
-
-    # def handle_remove_command(
-    #     self, args=None
-    # ):  # this is the command to remove an item.
-    #     if args:
-    #         name = args.name
-    #     else:
-    #         name = input("Which item would you like to remove? ")
-
+        
     def handle_remove_command(self):  # this is the command to remove an item.
         name = input("Which item would you like to remove? ")
         matches = self.grocery_app.search_item_name(name)

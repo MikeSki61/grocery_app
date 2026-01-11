@@ -64,7 +64,9 @@ class GroceryList:
             f"Added: {name} {store} {cost} {amount} {priority} {buy} {unique_id}"
         )
 
-    def remove_item(self, id: int) -> None:
+
+
+    def remove_item(self, name, id: int) -> None:
         
         """This is a function to remove items
             from the list as a string.
@@ -80,6 +82,9 @@ class GroceryList:
         self.grocery_list.pop(index)
 
         self.save_data()
+        utils.show_warning(title="SUCCESS", msg=f"{name} was removed")
+
+
 
     def set_grocery_list(self):
         os.makedirs(constants.EXPORT_PATH, exist_ok=True)
@@ -114,6 +119,15 @@ class GroceryList:
             if re.match(pattern, item.name, re.IGNORECASE):
                 matching_items.append(item)
         return matching_items
+    
+    def sort_items(self, attribute, reverse=False):
+        self.grocery_list = sorted(
+            self.grocery_list,
+            key=lambda item: getattr(item, attribute),
+            reverse=reverse
+        )
+
+        utils.save_data(self.grocery_list_path, self.grocery_list)
         
     def get_index_from_id(self, id):
         """
