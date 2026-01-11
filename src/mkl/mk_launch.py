@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-
 import argparse
 import mkl.constants as constants
 import mkl.mk_core as mk_core
 import mkl.utils as utils
+
 
 class Launch:
     def __init__(self):
@@ -29,7 +29,6 @@ class Launch:
             print("Use CLI mode from main()")
         elif mode == "ui":
             pass
-        else:
             print(f"Unknown mode: {mode}")
 
     def run_interactive(self) -> None:
@@ -88,15 +87,7 @@ class Launch:
 
         print(f"{name} was added to the grocery list")
         print(utils.get_line_delimiter())
-
-    # def handle_remove_command(
-    #     self, args=None
-    # ):  # this is the command to remove an item.
-    #     if args:
-    #         name = args.name
-    #     else:
-    #         name = input("Which item would you like to remove? ")
-
+        
     def handle_remove_command(self):  # this is the command to remove an item.
         name = input("Which item would you like to remove? ")
         matches = self.grocery_app.search_item_name(name)
@@ -226,7 +217,7 @@ class Launch:
             name(str) The name of the item
 
         """
-        print("Enter a name for the item. (ex. ice cream")
+        print("Enter a name for the item. (ex. ice cream)")
         # Get the name input
         name = input("Item name: ").strip()
 

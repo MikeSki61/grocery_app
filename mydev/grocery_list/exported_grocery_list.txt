@@ -1,4 +1,0 @@
-item 1 |name: Juice |store: Wal-Mart |cost: 2.75 |amount: 1 |priority: 1 |buy: True 
-item 2 |name: Milk |store: Wal-Mart |cost: 2.89 |amount: 2 |priority: 1 |buy: True 
-
-The total cost is $9.212399999999999
