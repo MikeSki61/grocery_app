@@ -66,7 +66,7 @@ class GroceryList:
 
 
 
-    def remove_item(self, name, id: int) -> None:
+    def remove_item(self, name: str, id: int) -> None:
         
         """This is a function to remove items
             from the list as a string.
@@ -77,10 +77,12 @@ class GroceryList:
         Returns:
             str: _return item as a string
         """
-        
         index = self.get_index_from_id(id)
+        if index is None:
+            print((f"Could not remove '{name}' : id not found."))
+            return
+        
         self.grocery_list.pop(index)
-
         self.save_data()
         utils.show_warning(title="SUCCESS", msg=f"{name} was removed")
 
