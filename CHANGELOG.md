@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.0.0] - 2026-1-13
+
+## Day 12 UI Functionality
+- added UI functionality
+- created stylesheet.py for styling the UI
+- styled UI using stylessheet
+- refactored code in launch.py
+- created util.py for loading and saving data
+- imported QtWidgets mod to add widgets to UI
+- tested UI all ok
+
+
 ## [3.0.0] - 2025-12-30
 
 ##  Day 10 OOP 

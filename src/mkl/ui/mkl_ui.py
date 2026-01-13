@@ -132,14 +132,14 @@ class GroceryApp(QtWidgets.QWidget):
     
         self.reload_ui()
 
-    def delete_item(self):
+    def delete_item(self, name):
         selected_items = self.items_table.selectedItems()
         if selected_items:
             row = self.items_table.currentRow()
             name = str(self.items_table.item(row, 0).text())
             id = self.items_table.item(row, 0).data(QtCore.Qt.UserRole)
             self.items_table.removeRow(row)
-            self.grocery_app.remove_item(id)
+            self.grocery_app.remove_item(name, id)   
             utils.show_warning(title="SUCCESS", msg=f"{name} was removed")
 
     def populate_combo_box(self):
@@ -243,7 +243,7 @@ class GroceryApp(QtWidgets.QWidget):
         else:
             reverse = True
         self.grocery_app.sort_items(self.sort_combo_box.currentText(), reverse=reverse)
-        self.reload.ui()
+        self.reload_ui()
 
     def search_items(self):
         search_term = self.search_input.text().lower()

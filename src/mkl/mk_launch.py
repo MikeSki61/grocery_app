@@ -8,11 +8,7 @@ from mkl import mk_core
 from mkl import constants
 from mkl import utils
 from mkl.ui import mkl_ui
-
-# import mkl.constants as constants
-# import mkl.mk_core as mk_core
-# import mkl.utils as utils
-
+from mkl.ui import mkl_ui, stylesheet
 
 class Launch:
     def __init__(self):
@@ -37,6 +33,7 @@ class Launch:
             print("Use CLI mode from main()")
         elif mode == "ui":
             app = QtWidgets.QApplication(sys.argv)
+            app.setStyleSheet(stylesheet.load_stylesheet())
             ui = mkl_ui.GroceryApp()
             ui.show()
             app.exec_()
@@ -376,7 +373,6 @@ class Launch:
                 print("Invalid input. Please enter true|yes OR false|no")
 
         return buy
-
 
 def main() ->None:
     parser = argparse.ArgumentParser(description="MK Grocery List Manager")

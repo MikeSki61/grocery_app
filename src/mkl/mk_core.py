@@ -63,9 +63,7 @@ class GroceryList:
         logging.info(
             f"Added: {name} {store} {cost} {amount} {priority} {buy} {unique_id}"
         )
-
-
-
+        
     def remove_item(self, name: str, id: int) -> None:
         
         """This is a function to remove items
@@ -85,7 +83,6 @@ class GroceryList:
         self.grocery_list.pop(index)
         self.save_data()
         utils.show_warning(title="SUCCESS", msg=f"{name} was removed")
-
 
 
     def set_grocery_list(self):
@@ -128,8 +125,8 @@ class GroceryList:
             key=lambda item: getattr(item, attribute),
             reverse=reverse
         )
-
-        utils.save_data(self.grocery_list_path, self.grocery_list)
+        self.save_data()
+        # utils.save_data(self.grocery_list_path, self.grocery_list)
         
     def get_index_from_id(self, id):
         """
