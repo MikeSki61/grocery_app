@@ -1,0 +1,29 @@
+[
+    {
+        "_name": "Chicken",
+        "_store": "Acme",
+        "_cost": 2.99,
+        "_amount": 1,
+        "_priority": 1,
+        "_buy": true,
+        "_id": 288287787857303087617978762458758235254
+    },
+    {
+        "_name": "Beef ",
+        "_store": "WaWa",
+        "_cost": 2.99,
+        "_amount": 1,
+        "_priority": 1,
+        "_buy": true,
+        "_id": 248849229957167764694651516513570293023
+    },
+    {
+        "_name": "Salad",
+        "_store": "Acme",
+        "_cost": 3.0,
+        "_amount": 2,
+        "_priority": 4,
+        "_buy": true,
+        "_id": 62626974840485989766467128305248852768
+    }
+]

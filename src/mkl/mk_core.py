@@ -126,9 +126,9 @@ class GroceryList:
             reverse=reverse
         )
         self.save_data()
-        # utils.save_data(self.grocery_list_path, self.grocery_list)
         
     def get_index_from_id(self, id):
+        
         """
         Get the index from the given id.
 
@@ -145,6 +145,7 @@ class GroceryList:
                 return index
             else:
                 index += 1
+        self.items_by_id: dict[int, GroceryItem] = {}
 
     def get_index_from_name(self, name: str):
     
