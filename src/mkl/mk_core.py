@@ -83,9 +83,7 @@ class GroceryList:
 
     def set_grocery_list(self):
         os.makedirs(constants.EXPORT_PATH, exist_ok=True)
-        # file_path os.path.join(
-        #     constants.EXPORT_PATH, f"{constants.GROCERY_LIST}.json")
-
+       
         if os.path.exists(self.grocery_list_path):
             grocery_list = self.load_data()
 
