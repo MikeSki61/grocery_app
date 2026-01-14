@@ -126,7 +126,6 @@ class GroceryList:
             reverse=reverse
         )
         self.save_data()
-        # utils.save_data(self.grocery_list_path, self.grocery_list)
         
     def get_index_from_id(self, id):
         """
