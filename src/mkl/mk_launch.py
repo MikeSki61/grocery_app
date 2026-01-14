@@ -1,10 +1,14 @@
 #!/usr/bin/env python
 
-
 import argparse
-import mkl.constants as constants
-import mkl.mk_core as mk_core
-import mkl.utils as utils
+from PyQt5 import QtWidgets
+import sys
+
+from mkl import mk_core
+from mkl import constants
+from mkl import utils
+from mkl.ui import mkl_ui
+from mkl.ui import mkl_ui, stylesheet
 
 class Launch:
     def __init__(self):
@@ -28,7 +32,11 @@ class Launch:
         elif mode == "cli":
             print("Use CLI mode from main()")
         elif mode == "ui":
-            pass
+            app = QtWidgets.QApplication(sys.argv)
+            app.setStyleSheet(stylesheet.load_stylesheet())
+            ui = mkl_ui.GroceryApp()
+            ui.show()
+            app.exec_()
         else:
             print(f"Unknown mode: {mode}")
 
@@ -46,6 +54,7 @@ class Launch:
             if command == "add":
                 # Add an item to the grocery list.
                 self.handle_add_command()
+                
             elif command == "remove":
                 # Remove an item from the grocery list.
                     self.handle_remove_command()
@@ -89,43 +98,48 @@ class Launch:
         print(f"{name} was added to the grocery list")
         print(utils.get_line_delimiter())
 
-    # def handle_remove_command(
-    #     self, args=None
-    # ):  # this is the command to remove an item.
-    #     if args:
-    #         name = args.name
-    #     else:
-    #         name = input("Which item would you like to remove? ")
+    def handle_remove_command(self, args: argparse.Namespace | None = None) -> None:
+        """
+        Remove an item by name prefix.
 
-    def handle_remove_command(self):  # this is the command to remove an item.
-        name = input("Which item would you like to remove? ")
+        If multiple items match, prompt the user to choose which one.
+        """
+        if args and getattr(args, "name", None):
+            name = " ".join(args.name).strip() if isinstance(
+                args.name, list) else str(args.name).strip()
+        else:
+            name = input("\nEnter the item name to remove: ").strip()
+
+        print("")
         matches = self.grocery_app.search_item_name(name)
 
         if not matches:
-            print(f"I'm sorry, I could not find a match for {name}")
+            print(f"I'm sorry, I could not find a match for '{name}'.")
+            return
 
-        elif len(matches) > 1:
+        if len(matches) > 1:
             for match_num, match in enumerate(matches, start=1):
-                match_string = (
+                print(
                     f"{match_num}. "
-                    f"| Name: {match["name"]} "
-                    f"| Store: {match["store"]} "
-                    f"| Cost: {match["cost"]} "
-                    f"| Amount: {match["amount"]} "
-                    f"| Priority: {match["priority"]} "
-                    f"| Buy: {match["buy"]} |"
+                    f"| Name: {match.name} "
+                    f"| Store: {match.store} "
+                    f"| Cost: {match.cost} "
+                    f"| Amount: {match.amount} "
+                    f"| Priority: {match.priority} "
+                    f"| Buy: {match.buy}"
                 )
-                print(match_string)
 
-            item_num = input("\nPlease select the number you would like to remove: ")
+            item_num = input(
+                "\nPlease select the number you would like to remove: ").strip()
             match_item = matches[int(item_num) - 1]
-            self.grocery_app.remove_item(match_item.id)
-            print(f"\nItem {match_item.name} has been removed.")
 
-        else:
-            match_item = matches[0]
-            self.grocery_app.remove_item(match_item.id)
-            print(f"That item has been removed")
+            self.grocery_app.remove_item(name, id=match_item.id)
+            print("\nSelected item has been removed.")
+            return
+
+        match_item = matches[0]
+        self.grocery_app.remove_item(name, id=match_item.id)
+        print("That item has been removed.\n")
 
     def handle_edit_command(self):  # This is the command to be used to edit
         item = input("Which item would you like to edit? ")
@@ -226,7 +240,7 @@ class Launch:
             name(str) The name of the item
 
         """
-        print("Enter a name for the item. (ex. ice cream")
+        print("Enter a name for the item. (ex. ice cream)")
         # Get the name input
         name = input("Item name: ").strip()
 
@@ -359,7 +373,6 @@ class Launch:
                 print("Invalid input. Please enter true|yes OR false|no")
 
         return buy
-
 
 def main() ->None:
     parser = argparse.ArgumentParser(description="MK Grocery List Manager")
