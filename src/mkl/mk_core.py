@@ -86,7 +86,11 @@ class GroceryList:
 
     def set_grocery_list(self):
         os.makedirs(constants.EXPORT_PATH, exist_ok=True)
+<<<<<<< HEAD
 
+=======
+       
+>>>>>>> 5047ea750983e530c3f128eea27e761721364463
         if os.path.exists(self.grocery_list_path):
             grocery_list = self.load_data()
 
@@ -130,6 +134,27 @@ class GroceryList:
             reverse=reverse
         )
         self.save_data()
+<<<<<<< HEAD
+=======
+        
+    def get_index_from_id(self, id):
+        """
+        Get the index from the given id.
+
+        Args:
+            id (int): item number from the grocery list item
+
+        Returns:
+            int: The index of the grocery item in the grocery list 
+        """
+        index = 0
+
+        for item in self.grocery_list:
+            if item.id == id:
+                return index
+            else:
+                index += 1
+>>>>>>> 5047ea750983e530c3f128eea27e761721364463
 
     def get_index_from_name(self, name: str):
     
