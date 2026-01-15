@@ -1,5 +1,0 @@
-item 1 |name: Chicken |store: Acme |cost: 2.99 |amount: 1 |priority: 1 |buy: True 
-item 2 |name: Beef  |store: WaWa |cost: 2.99 |amount: 1 |priority: 1 |buy: True 
-item 3 |name: Salad |store: Acme |cost: 3.0 |amount: 2 |priority: 4 |buy: True 
-
-The total cost is $12.9384

@@ -29,6 +29,7 @@ class GroceryList:
         self.grocery_list_path = os.path.join(
             constants.EXPORT_PATH, f"{constants.GROCERY_LIST}.json"
         )
+        self.items_by_id: dict[int, GroceryItem] = {}
         
         self.grocery_list = []
         self.set_grocery_list()
@@ -59,6 +60,7 @@ class GroceryList:
         grocery_item.id = unique_id
 
         self.grocery_list.append(grocery_item)
+        self.items_by_id[unique_id] = grocery_item
         self.save_data()
         logging.info(
             f"Added: {name} {store} {cost} {amount} {priority} {buy} {unique_id}"
@@ -75,20 +77,15 @@ class GroceryList:
         Returns:
             str: _return item as a string
         """
-        index = self.get_index_from_id(id)
-        if index is None:
-            print((f"Could not remove '{name}' : id not found."))
-            return
-        
-        self.grocery_list.pop(index)
+        item=self.items_by_id.pop(id)
+
+        self.grocery_list.remove(item)
         self.save_data()
         utils.show_warning(title="SUCCESS", msg=f"{name} was removed")
 
 
     def set_grocery_list(self):
         os.makedirs(constants.EXPORT_PATH, exist_ok=True)
-        # file_path os.path.join(
-        #     constants.EXPORT_PATH, f"{constants.GROCERY_LIST}.json")
 
         if os.path.exists(self.grocery_list_path):
             grocery_list = self.load_data()
@@ -100,6 +97,13 @@ class GroceryList:
             self.save_data()
             
         self.grocery_list = grocery_list
+        self.rebuild_id_dict()
+
+    def rebuild_id_dict(self) -> None:
+        self.items_by_id.clear()
+
+        for item in self.grocery_list:
+            self.items_by_id[item.id] = item
 
     def search_item_name(self, search_item):
         """
@@ -126,26 +130,6 @@ class GroceryList:
             reverse=reverse
         )
         self.save_data()
-        
-    def get_index_from_id(self, id):
-        
-        """
-        Get the index from the given id.
-
-        Args:
-            id (int): item number from the grocery list item
-
-        Returns:
-            int: The index of the grocery item in the grocery list 
-        """
-        index = 0
-
-        for item in self.grocery_list:
-            if item.id == id:
-                return index
-            else:
-                index += 1
-        self.items_by_id: dict[int, GroceryItem] = {}
 
     def get_index_from_name(self, name: str):
     
@@ -184,9 +168,8 @@ class GroceryList:
             buy (str | bool): Updated buy status. Defaults to "skip"
             id (str | None): Updated id.
         """
-        
-        index = self.get_index_from_id(id)
-        current_item = self.grocery_list[index]
+
+        current_item = self.items_by_id[id]
 
         if name:
             current_item.name = name

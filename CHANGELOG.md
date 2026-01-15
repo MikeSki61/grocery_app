@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.0] - 2026 1-15
+
+## Day 13 Problem Solving and Algorithms
+
+- optimized code
+- tested and ran code after optimization.  checked good
+
 ## [4.0.0] - 2026-1-13
 
 ## Day 12 UI Functionality

@@ -1,14 +1,14 @@
 
 def load_stylesheet():
     return """
-    QWidget {
-        background-color: #FAFAD2;
+     QWidget {
+        background-color: #B8860B;
         color: #CBE3CA;
         font-family: Arial, sans-serif;
     }
 
     QPushButton {
-        background-color: #00FFFF;
+        background-color: #F4A460;
         color: #303830;
         border: none;
         padding: 10px 20px;
@@ -26,8 +26,8 @@ def load_stylesheet():
     }
 
     QTableWidget {
-        background-color: #DDA0DD;  
-        border: 1px solid 	#F4A460;
+        background-color: #CBE3CA;  
+        border: 1px solid #633951;
         color: #303830;
         padding: 10px;
     }
@@ -54,4 +54,5 @@ def load_stylesheet():
         border: 1px solid #3E3E3E;
     }
     """
+
 
