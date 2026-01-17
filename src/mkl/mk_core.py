@@ -79,18 +79,13 @@ class GroceryList:
         """
         item=self.items_by_id.pop(id)
 
-        self.grocery_list.remove(item)
         self.save_data()
         utils.show_warning(title="SUCCESS", msg=f"{name} was removed")
 
 
     def set_grocery_list(self):
         os.makedirs(constants.EXPORT_PATH, exist_ok=True)
-<<<<<<< HEAD
-
-=======
-       
->>>>>>> 5047ea750983e530c3f128eea27e761721364463
+        
         if os.path.exists(self.grocery_list_path):
             grocery_list = self.load_data()
 
@@ -134,8 +129,6 @@ class GroceryList:
             reverse=reverse
         )
         self.save_data()
-<<<<<<< HEAD
-=======
         
     def get_index_from_id(self, id):
         """
@@ -154,7 +147,6 @@ class GroceryList:
                 return index
             else:
                 index += 1
->>>>>>> 5047ea750983e530c3f128eea27e761721364463
 
     def get_index_from_name(self, name: str):
     
