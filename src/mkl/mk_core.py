@@ -12,7 +12,7 @@ Functions are:
 -search_items(): Able to search for items if there are duplicates using id number.
 
 Author: Mike Kwiatkowsky
-Version: 3.0.0
+Version: 4.1.0
 """
 import logging
 import os
@@ -21,14 +21,14 @@ import uuid
 
 import mkl.constants as constants
 import mkl.utils as utils
+from mkl.paths import EXPORT_FILE, DATA_FILE
 from mkl.grocery_item import GroceryItem
 
 class GroceryList:
     
     def __init__(self):
-        self.grocery_list_path = os.path.join(
-            constants.EXPORT_PATH, f"{constants.GROCERY_LIST}.json"
-        )
+        self.grocery_list_path = DATA_FILE
+        
         self.items_by_id: dict[int, GroceryItem] = {}
         
         self.grocery_list = []
@@ -75,22 +75,18 @@ class GroceryList:
             id (int): the assigned id for the item
 
         Returns:
+        
             str: _return item as a string
         """
         item=self.items_by_id.pop(id)
 
-        self.grocery_list.remove(item)
+        # self.grocery_list.remove(item)
         self.save_data()
         utils.show_warning(title="SUCCESS", msg=f"{name} was removed")
 
-
     def set_grocery_list(self):
-        os.makedirs(constants.EXPORT_PATH, exist_ok=True)
-<<<<<<< HEAD
-
-=======
-       
->>>>>>> 5047ea750983e530c3f128eea27e761721364463
+        # os.makedirs(constants.EXPORT_PATH, exist_ok=True)
+        
         if os.path.exists(self.grocery_list_path):
             grocery_list = self.load_data()
 
@@ -134,8 +130,6 @@ class GroceryList:
             reverse=reverse
         )
         self.save_data()
-<<<<<<< HEAD
-=======
         
     def get_index_from_id(self, id):
         """
@@ -154,7 +148,6 @@ class GroceryList:
                 return index
             else:
                 index += 1
->>>>>>> 5047ea750983e530c3f128eea27e761721364463
 
     def get_index_from_name(self, name: str):
     
@@ -238,12 +231,8 @@ class GroceryList:
             total_cost = self.calculate_total_cost(buy_list, round_cost=True)
             print(f"The total cost is ${total_cost}")
             print(utils.get_line_delimiter())
-
-            exported_list_file = os.path.join(
-                constants.EXPORT_PATH, constants.EXPORT_LIST
-            )
-
-            with open(exported_list_file, "w") as f:
+            
+            with open(EXPORT_FILE, "w") as f:
                 item_num = 1
 
                 for item in buy_list:
@@ -263,7 +252,7 @@ class GroceryList:
                 f.write("\n")
                 f.write(f"The total cost is ${total_cost}")
             
-            return exported_list_file
+            return EXPORT_FILE
                 
     @staticmethod       
     def list_items(items)-> str:
@@ -286,11 +275,11 @@ class GroceryList:
             )
             print(item_string)  
 
-    @staticmethod
-    def calculate_total_cost( 
+    def calculate_total_cost(
+        self, 
         grocery_list: list[object], 
         round_cost: bool = False,
-        tax: float = 0.08,
+        tax: float = None,
         ):
         """_Parameters
         grocery_list (list[dict]): A list of dictionaries where each dictionary represents
@@ -311,6 +300,7 @@ class GroceryList:
             total_cost = round(total_cost, 2)
             
         if tax:
+            self.settings.get("tax_rate", 0.08)
             total_cost += total_cost * tax
 
         return total_cost

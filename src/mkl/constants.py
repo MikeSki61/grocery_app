@@ -1,7 +1,7 @@
-EXPORT_PATH = "C:/mk_grocery"
-EXPORT_PATH = "mydev/grocery_list"
-GROCERY_LIST = "grocery_list"
-EXPORT_LIST = "exported_grocery_list.txt"
+# EXPORT_PATH = "C:/mk_grocery"
+# EXPORT_PATH = "mydev/grocery_list"
+# GROCERY_LIST = "grocery_list"
+# EXPORT_LIST = "exported_grocery_list.txt"
 
 NAME_DEFAULT = "unamed item"
 STORE_DEFAULT = "Wal-Mart"
