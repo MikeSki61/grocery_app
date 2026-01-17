@@ -1,21 +1,30 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
-from mkl import constants
-from mkl import mk_core
-from mkl import utils
+from mkl import constants, config, utils, mk_core
+from mkl.ui.settings_dialog import SettingsDialog
 
-class GroceryApp(QtWidgets.QWidget):
+class GroceryApp(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.grocery_app = mk_core.GroceryList()
+
+        # Load Settings
+        self.settings = config.load_settings()
 
         self.mode ="loading"
         
         self.setWindowTitle("Mk Grocery List")
         self.setGeometry(100, 100, 600, 900)
 
+        # Central Widget
+        central = QtWidgets.QWidget(self)
+        self.setCentralWidget(central)
+
         # Layouts
-        self.main_layout = QtWidgets.QVBoxLayout()
+        self.main_layout = QtWidgets.QVBoxLayout(central)
         self.sort_layout = QtWidgets.QHBoxLayout()
+
+        # Menu Bar
+        self.create_menu_bar()
 
         # Inputs
         self.name_input = QtWidgets.QLineEdit(self, placeholderText="Name")
@@ -141,6 +150,36 @@ class GroceryApp(QtWidgets.QWidget):
             self.items_table.removeRow(row)
             self.grocery_app.remove_item(name, id)   
             utils.show_warning(title="SUCCESS", msg=f"{name} was removed")
+
+    def create_menu_bar(self):
+        menubar = self.menuBar()
+
+        app_menu = menubar.addMenu("Menu")
+
+        settings_action = QtWidgets.QAction("Settings...", self)
+        settings_action.triggered.connect(self.open_settings)
+        app_menu.addAction(settings_action)
+
+        app_menu.addSeparator()
+
+        exit_action = QtWidgets.QAction("Exit", self)
+        exit_action.triggered.connect(QtWidgets.qApp.quit)
+        app_menu.addAction(exit_action)
+
+    def open_settings(self):
+        dlg = SettingsDialog(
+            self,
+            store_default=self.settings.get("store_default", constants.STORE_DEFAULT),
+            tax_rate=self.settings.get("tax_rate", 0.08),
+        )
+        if dlg.exec_() == QtWidgets.QDialog.Accepted:
+            new_settings = dlg.get_settings()
+            config.save_settings(new_settings)
+            self.settings = new_settings
+            utils.show_warning(
+                f"Settings updated:\nStore: {new_settings['store_default']}\nTax: {new_settings['tax_rate'] * 100:.2f}%",
+                "SUCCESS",
+        )
 
     def populate_combo_box(self):
         for attr in ["name", "store", "cost", "amount", "priority"]:

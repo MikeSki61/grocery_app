@@ -7,7 +7,7 @@ import sys
 from mkl import mk_core
 from mkl import constants
 from mkl import utils
-from mkl.ui import mkl_ui
+from mkl.paths import ensure_dirs
 from mkl.ui import mkl_ui, stylesheet
 
 class Launch:
@@ -375,6 +375,8 @@ class Launch:
         return buy
 
 def main() ->None:
+    # Make sure the app directory exists
+    ensure_dirs()
     parser = argparse.ArgumentParser(description="MK Grocery List Manager")
     parser.add_argument(
         "--mode",

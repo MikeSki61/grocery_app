@@ -12,7 +12,7 @@ Functions are:
 -search_items(): Able to search for items if there are duplicates using id number.
 
 Author: Mike Kwiatkowsky
-Version: 3.0.0
+Version: 4.1.0
 """
 import logging
 import os
@@ -21,17 +21,16 @@ import uuid
 
 import mkl.constants as constants
 import mkl.utils as utils
+from mkl.paths import EXPORT_FILE, DATA_FILE
 from mkl.grocery_item import GroceryItem
 
 class GroceryList:
     
     def __init__(self):
-        self.grocery_list_path = os.path.join(
-            constants.EXPORT_PATH, f"{constants.GROCERY_LIST}.json"
-        )
-        self.items_by_id: dict[int, GroceryItem] = {}
-        
+        self.grocery_list_path = DATA_FILE
+
         self.grocery_list = []
+        self.items_by_id: dict[int, GroceryItem] = {}
         self.set_grocery_list()
     
     def add_item(self, name, store, cost, amount, priority, buy):
@@ -75,6 +74,7 @@ class GroceryList:
             id (int): the assigned id for the item
 
         Returns:
+        
             str: _return item as a string
         """
         item=self.items_by_id.pop(id)
@@ -82,10 +82,8 @@ class GroceryList:
         self.save_data()
         utils.show_warning(title="SUCCESS", msg=f"{name} was removed")
 
-
     def set_grocery_list(self):
-        os.makedirs(constants.EXPORT_PATH, exist_ok=True)
-        
+
         if os.path.exists(self.grocery_list_path):
             grocery_list = self.load_data()
 
@@ -230,12 +228,8 @@ class GroceryList:
             total_cost = self.calculate_total_cost(buy_list, round_cost=True)
             print(f"The total cost is ${total_cost}")
             print(utils.get_line_delimiter())
-
-            exported_list_file = os.path.join(
-                constants.EXPORT_PATH, constants.EXPORT_LIST
-            )
-
-            with open(exported_list_file, "w") as f:
+            
+            with open(EXPORT_FILE, "w") as f:
                 item_num = 1
 
                 for item in buy_list:
@@ -255,7 +249,7 @@ class GroceryList:
                 f.write("\n")
                 f.write(f"The total cost is ${total_cost}")
             
-            return exported_list_file
+            return EXPORT_FILE
                 
     @staticmethod       
     def list_items(items)-> str:
@@ -278,12 +272,12 @@ class GroceryList:
             )
             print(item_string)  
 
-    @staticmethod
-    def calculate_total_cost( 
+    def calculate_total_cost(
+        self, 
         grocery_list: list[object], 
         round_cost: bool = False,
-        tax: float = 0.08,
-        ):
+        tax: float = None,
+    ):
         """_Parameters
         grocery_list (list[dict]): A list of dictionaries where each dictionary represents
         an item with keys 'amount' (int) and 'cost' (float).
@@ -293,12 +287,13 @@ class GroceryList:
         Returns:
             _float: The total cost after applying tax and optional rounding.
         """
+
+        if not tax:
+            self.__settings.get("tax_rate", 0.08)
         total_cost = 0
-
         for item in grocery_list:
-            cost = item.amount * item.cost
-            total_cost += cost
-
+            total_cost += item.amount * item.cost
+            
         if round_cost:
             total_cost = round(total_cost, 2)
             
