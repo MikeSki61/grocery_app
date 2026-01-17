@@ -80,12 +80,19 @@ class GroceryList:
         """
         item=self.items_by_id.pop(id)
 
+<<<<<<< HEAD
         # self.grocery_list.remove(item)
+=======
+>>>>>>> bd6b0f9f7ab572ee2cb84d49110c7eb9c65c959e
         self.save_data()
         utils.show_warning(title="SUCCESS", msg=f"{name} was removed")
 
     def set_grocery_list(self):
+<<<<<<< HEAD
         # os.makedirs(constants.EXPORT_PATH, exist_ok=True)
+=======
+        os.makedirs(constants.EXPORT_PATH, exist_ok=True)
+>>>>>>> bd6b0f9f7ab572ee2cb84d49110c7eb9c65c959e
         
         if os.path.exists(self.grocery_list_path):
             grocery_list = self.load_data()
