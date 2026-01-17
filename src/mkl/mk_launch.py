@@ -8,7 +8,6 @@ from mkl import mk_core
 from mkl import constants
 from mkl import utils
 from mkl.paths import ensure_dirs
-from mkl.ui import mkl_ui
 from mkl.ui import mkl_ui, stylesheet
 
 class Launch:

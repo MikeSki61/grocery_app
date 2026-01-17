@@ -23,6 +23,9 @@ class GroceryApp(QtWidgets.QMainWindow):
         self.main_layout = QtWidgets.QVBoxLayout(central)
         self.sort_layout = QtWidgets.QHBoxLayout()
 
+        # Menu Bar
+        self.create_menu_bar()
+
         # Inputs
         self.name_input = QtWidgets.QLineEdit(self, placeholderText="Name")
         self.store_input = QtWidgets.QLineEdit(self, placeholderText="Store")
@@ -157,10 +160,10 @@ class GroceryApp(QtWidgets.QMainWindow):
         settings_action.triggered.connect(self.open_settings)
         app_menu.addAction(settings_action)
 
-        app_menu.addSeperator()
+        app_menu.addSeparator()
 
         exit_action = QtWidgets.QAction("Exit", self)
-        exit_action.triggered.connect(QtWidgets.app.quit)
+        exit_action.triggered.connect(QtWidgets.qApp.quit)
         app_menu.addAction(exit_action)
 
     def open_settings(self):
@@ -174,7 +177,7 @@ class GroceryApp(QtWidgets.QMainWindow):
             config.save_settings(new_settings)
             self.settings = new_settings
             utils.show_warning(
-                f"Settings updated:\nStore: {new_settings['store_default']}\nTax: {new_settings['tax_rate'] * 100:2f}%",
+                f"Settings updated:\nStore: {new_settings['store_default']}\nTax: {new_settings['tax_rate'] * 100:.2f}%",
                 "SUCCESS",
         )
 
